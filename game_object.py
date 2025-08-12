@@ -2,41 +2,46 @@ import pygame
 
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, ground_y, gravity=1, jump_power=-17.5):
         super().__init__()
-        self.shape = pygame.Surface((20, 40))
-        self.shape.fill(color=(0, 0, 0))
-        self.rect = self.shape.get_rect()
-        self.rect.bottom = 260  # The bottom of block is placed at y=260.
-        self.velocity = 0,  # Velocity at vertical direction.
-        self.gravity = 1,  # Gravity effect on velocity, direction down.
-        self.jump_power = -15  # Initial jump velocity, direction up.
+
+        self.image = pygame.Surface((30, 60))  # Sprite.image must be assigned.
+        self.rect = self.image.get_rect()  # Sprite.rect must be assigned.
+        self.ground_y = ground_y
+        self.v_speed = 0  # Initial velocity at vertical direction.
+        self.gravity = gravity  # Gravity effect on velocity, direction down. The direction is opposite to v_speed.
+        self.jump_power = jump_power  # Initial jump velocity, direction up.
+
+        self.image.fill(color=(255, 0, 0))
+        self.rect.bottom = ground_y  # The bottom of block is placed at y=260.
 
     def jump(self):
-        if self.rect.bottom == 260:
-            self.velocity = self.jump_power
+        if self.rect.bottom == self.ground_y:
+            self.v_speed = self.jump_power
 
+    # Sprite.update() must be override.
     def update(self):
-        self.velocity += self.gravity
-        self.rect.y += self.velocity  # Move block's y coordinate with velocity.
+        self.v_speed += self.gravity
+        self.rect.bottom += self.v_speed  # Move block's y coordinate with velocity.
 
         # When the block lands, reset bottom coordinate and velocity.
-        if self.rect.bottom >= 260:
-            self.rect.bottom = 260
-            self.velocity = 0
+        if self.rect.bottom >= self.ground_y:
+            self.rect.bottom = self.ground_y
+            self.v_speed = 0
 
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, ground_y):
         super().__init__()
-        self.shape = pygame.Surface((20, 20))
-        self.shape.fill(color=(0, 255, 0))
-        self.rect = self.shape.get_rect()
-        self.rect.x = 800
-        self.rect.bottom = 260
+
+        self.image = pygame.Surface((30, 30))
+        self.rect = self.image.get_rect()
+
+        self.image.fill(color=(0, 0, 0))
+        self.rect.bottom = ground_y
 
     def update(self):
-        self.rect.x -= 5  # Obstacle moves to left 5 pixels per frame.
+        self.rect.left -= 5  # Obstacle moves to left 5 pixels per frame.
 
         if self.rect.right < 0:
             self.kill()
