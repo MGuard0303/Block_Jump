@@ -66,7 +66,7 @@ class Game:
         self.player_group.add(self.player)
 
     def run(self):
-        millis = int(random.uniform(1, 4) * 1000)
+        millis = int(random.uniform(1, 3.5) * 1000)
         pygame.time.set_timer(self.SPAWN_EVENT, millis=millis)  # Spawn an obstacle every millis ms.
         pygame.time.set_timer(self.CHANGE_RENDER_MODE, millis=30 * 1000)
 
@@ -107,6 +107,12 @@ class Game:
 
                     elif event.type == self.CHANGE_RENDER_MODE:
                         self.dark_mode = not self.dark_mode
+
+                        for ele in self.obstacles:
+                            if self.dark_mode:
+                                ele.image.fill(self.obstacle_color_dark)
+                            else:
+                                ele.image.fill(self.obstacle_color)
 
                 # Update game.
                 self.player_group.update()
