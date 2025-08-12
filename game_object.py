@@ -2,10 +2,10 @@ import pygame
 
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, ground_y, gravity=1, jump_power=-17.5):
+    def __init__(self, ground_y, gravity=1, jump_power=-17.5, width=30, height=60):
         super().__init__()
 
-        self.image = pygame.Surface((30, 60))  # Sprite.image must be assigned.
+        self.image = pygame.Surface((width, height))  # Sprite.image must be assigned.
         self.rect = self.image.get_rect()  # Sprite.rect must be assigned.
         self.ground_y = ground_y
         self.v_speed = 0  # Initial velocity at vertical direction.
@@ -31,10 +31,10 @@ class Block(pygame.sprite.Sprite):
 
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self, ground_y):
+    def __init__(self, ground_y, width=30, height=30):
         super().__init__()
 
-        self.image = pygame.Surface((30, 30))
+        self.image = pygame.Surface((width, height))
         self.rect = self.image.get_rect()
 
         self.image.fill(color=(0, 0, 0))
