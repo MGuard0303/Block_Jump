@@ -12,26 +12,27 @@ class Game:
         pygame.init()
         pygame.display.set_caption("Block Jump")
 
-        self.screen = pygame.display.set_mode((width, height))
+        self.screen = pygame.display.set_mode(size=(width, height), flags=pygame.DOUBLEBUF, vsync=1)
         self.width = width
         self.height = height
         self.ground_y = ground_y
         self.clock = pygame.time.Clock()
 
-        self.background_color = (235, 235, 235)
-        self.font_color = (15, 15, 15)
-        self.player_color = (235, 0, 0)
-        self.obstacle_color = (15, 15, 15)
+        self.BACKGROUND_COLOR = (235, 235, 235)
+        self.FONT_COLOR = (15, 15, 15)
+        self.PLAYER_COLOR = (235, 0, 0)
+        self.OBSTACLE_COLOR = (15, 15, 15)
 
-        self.background_color_dark = (30, 30, 30)
-        self.font_color_dark = (245, 245, 245)
-        self.player_color_dark = (245, 245, 245)
-        self.obstacle_color_dark = (0, 191, 255)
+        self.BACKGROUND_COLOR_DARK = (30, 30, 30)
+        self.FONT_COLOR_DARK = (245, 245, 245)
+        self.PLAYER_COLOR_DARK = (245, 245, 245)
+        self.OBSTACLE_COLOR_DARK = (0, 191, 255)
+
         self.dark_mode = False
 
-        self.font1 = pygame.font.SysFont("Chalkboard", 48)
-        self.font2 = pygame.font.SysFont("Chalkboard", 24)
-        self.font3 = pygame.font.SysFont("Chalkboard", 18)
+        self.FONT1 = pygame.font.SysFont("Chalkboard", 48)
+        self.FONT2 = pygame.font.SysFont("Chalkboard", 24)
+        self.FONT3 = pygame.font.SysFont("Chalkboard", 18)
 
         self.SPAWN_EVENT = pygame.USEREVENT + 1
         self.CHANGE_RENDER_MODE = pygame.USEREVENT + 2
@@ -65,9 +66,9 @@ class Game:
         self.obstacles = pygame.sprite.Group()
 
         if self.dark_mode:
-            self.player.image.fill(self.player_color_dark)
+            self.player.image.fill(self.PLAYER_COLOR_DARK)
         else:
-            self.player.image.fill(self.player_color)
+            self.player.image.fill(self.PLAYER_COLOR)
 
         self.player.rect.left = 6 * self.player.rect.width
         self.player_group.add(self.player)
@@ -105,9 +106,9 @@ class Game:
                         obstacle = game_object.Obstacle(ground_y=self.ground_y, width=30 * m1, height=30 * m2)
 
                         if self.dark_mode:
-                            obstacle.image.fill(self.obstacle_color_dark)
+                            obstacle.image.fill(self.OBSTACLE_COLOR_DARK)
                         else:
-                            obstacle.image.fill(self.obstacle_color)
+                            obstacle.image.fill(self.OBSTACLE_COLOR)
 
                         obstacle.rect.left = self.width
                         self.obstacles.add(obstacle)
@@ -117,9 +118,9 @@ class Game:
 
                         for ele in self.obstacles:
                             if self.dark_mode:
-                                ele.image.fill(self.obstacle_color_dark)
+                                ele.image.fill(self.OBSTACLE_COLOR_DARK)
                             else:
-                                ele.image.fill(self.obstacle_color)
+                                ele.image.fill(self.OBSTACLE_COLOR)
 
                 # Update game.
                 self.player_group.update()
@@ -149,16 +150,16 @@ class Game:
 
     def draw(self):
         if self.dark_mode:
-            self.screen.fill(self.background_color_dark)
-            self.player.image.fill(self.player_color_dark)
-            pygame.draw.rect(surface=self.screen, color=self.font_color_dark, rect=(0, self.ground_y, self.width, 3))
-            score_text = self.font3.render(f"Score: {self.score}", True, self.font_color_dark)
+            self.screen.fill(self.BACKGROUND_COLOR_DARK)
+            self.player.image.fill(self.PLAYER_COLOR_DARK)
+            pygame.draw.rect(surface=self.screen, color=self.FONT_COLOR_DARK, rect=(0, self.ground_y, self.width, 3))
+            score_text = self.FONT3.render(f"Score: {self.score}", True, self.FONT_COLOR_DARK)
             score_text_rect = score_text.get_rect(x=0, y=0)
         else:
-            self.screen.fill(self.background_color)
-            self.player.image.fill(self.player_color)
-            pygame.draw.rect(surface=self.screen, color=self.font_color, rect=(0, self.ground_y, self.width, 3))
-            score_text = self.font3.render(f"Score: {self.score}", True, self.font_color)
+            self.screen.fill(self.BACKGROUND_COLOR)
+            self.player.image.fill(self.PLAYER_COLOR)
+            pygame.draw.rect(surface=self.screen, color=self.FONT_COLOR, rect=(0, self.ground_y, self.width, 3))
+            score_text = self.FONT3.render(f"Score: {self.score}", True, self.FONT_COLOR)
             score_text_rect = score_text.get_rect(x=0, y=0)
 
         self.screen.blit(score_text, score_text_rect)
@@ -168,13 +169,13 @@ class Game:
 
         if self.initial:
             if self.dark_mode:
-                text1 = self.font1.render("Block Jump !", True, self.font_color_dark)
-                text2 = self.font2.render("Press SPACE to start", True, self.font_color_dark)
+                text1 = self.FONT1.render("Block Jump !", True, self.FONT_COLOR_DARK)
+                text2 = self.FONT2.render("Press SPACE to start", True, self.FONT_COLOR_DARK)
                 text1_rect = text1.get_rect(center=(self.width / 2, self.height * 0.1))
                 text2_rect = text2.get_rect(center=(self.width / 2, self.height * 0.3))
             else:
-                text1 = self.font1.render("Block Jump !", True, self.font_color)
-                text2 = self.font2.render("Press SPACE to start", True, self.font_color)
+                text1 = self.FONT1.render("Block Jump !", True, self.FONT_COLOR)
+                text2 = self.FONT2.render("Press SPACE to start", True, self.FONT_COLOR)
                 text1_rect = text1.get_rect(center=(self.width / 2, self.height * 0.1))
                 text2_rect = text2.get_rect(center=(self.width / 2, self.height * 0.3))
 
@@ -182,13 +183,13 @@ class Game:
 
         if self.collide:
             if self.dark_mode:
-                text1 = self.font1.render("Game Over", True, self.font_color_dark)
-                text2 = self.font2.render("Press R to start", True, self.font_color_dark)
+                text1 = self.FONT1.render("Game Over", True, self.FONT_COLOR_DARK)
+                text2 = self.FONT2.render("Press R to start", True, self.FONT_COLOR_DARK)
                 text1_rect = text1.get_rect(center=(self.width / 2, self.height * 0.1))
                 text2_rect = text2.get_rect(center=(self.width / 2, self.height * 0.3))
             else:
-                text1 = self.font1.render("Game Over", True, self.font_color)
-                text2 = self.font2.render("Press R to start", True, self.font_color)
+                text1 = self.FONT1.render("Game Over", True, self.FONT_COLOR)
+                text2 = self.FONT2.render("Press R to start", True, self.FONT_COLOR)
                 text1_rect = text1.get_rect(center=(self.width / 2, self.height * 0.1))
                 text2_rect = text2.get_rect(center=(self.width / 2, self.height * 0.3))
 
