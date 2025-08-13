@@ -2,6 +2,8 @@
 
 This is a simple version of the Chrome T.rex game. (Yap, that game when you lose the internet connection)
 
+<br>
+<br>
 
 ## v0.9.0
 To run this game, make sure you have Pygame installed.
