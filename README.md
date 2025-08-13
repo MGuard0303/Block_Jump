@@ -7,7 +7,7 @@ This is a simple version of the Chrome T.rex game. (Yap, that game when you lose
 <br>
 <br>
 
-## v 0.9.0
+## v0.9.0
 To run this game, make sure you have Pygame installed.
 
 Clone this repository, and run `main.py` to play.
@@ -19,3 +19,5 @@ cd ./Block_Jump
 
 python main.py
 ```
+
+The executable file is distributed on Releases.
