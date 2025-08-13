@@ -31,6 +31,7 @@ class Game:
 
         self.font1 = pygame.font.SysFont("Chalkboard", 48)
         self.font2 = pygame.font.SysFont("Chalkboard", 24)
+        self.font3 = pygame.font.SysFont("Chalkboard", 18)
 
         self.SPAWN_EVENT = pygame.USEREVENT + 1
         self.CHANGE_RENDER_MODE = pygame.USEREVENT + 2
@@ -45,12 +46,18 @@ class Game:
         self.initial = True
         self.collide = False
 
+        self.score_millis = 0
+        self.score = 0
+
         self.player.rect.left = 6 * self.player.rect.width
         self.player_group.add(self.player)
 
     def reset(self):
         self.playing = True
         self.collide = False
+
+        self.score_millis = 0
+        self.score = 0
 
         self.player = game_object.Block(ground_y=self.ground_y)
 
@@ -118,6 +125,9 @@ class Game:
                 self.player_group.update()
                 self.obstacles.update()
 
+                self.score_millis += 1
+                self.score = int(self.score_millis / 6)
+
                 if pygame.sprite.spritecollideany(sprite=self.player, group=self.obstacles):
                     self.playing = False
                     self.collide = True
@@ -142,10 +152,16 @@ class Game:
             self.screen.fill(self.background_color_dark)
             self.player.image.fill(self.player_color_dark)
             pygame.draw.rect(surface=self.screen, color=self.font_color_dark, rect=(0, self.ground_y, self.width, 3))
+            score_text = self.font3.render(f"Score: {self.score}", True, self.font_color_dark)
+            score_text_rect = score_text.get_rect(x=0, y=0)
         else:
             self.screen.fill(self.background_color)
             self.player.image.fill(self.player_color)
             pygame.draw.rect(surface=self.screen, color=self.font_color, rect=(0, self.ground_y, self.width, 3))
+            score_text = self.font3.render(f"Score: {self.score}", True, self.font_color)
+            score_text_rect = score_text.get_rect(x=0, y=0)
+
+        self.screen.blit(score_text, score_text_rect)
 
         self.player_group.draw(self.screen)
         self.obstacles.draw(self.screen)
