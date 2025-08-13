@@ -2,6 +2,8 @@
 
 This is a simple version of the Chrome T.rex game. (Yap, that game when you lose the internet connection)
 
+![Demo](./docs/demo.gif)
+
 <br>
 <br>
 
