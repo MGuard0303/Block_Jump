@@ -86,7 +86,10 @@ class Game:
             if self.initial:
                 self.draw()
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
+                    if event.type == pygame.QUIT:
+                        self.running = False
+                        self.playing = False
+                    elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
                             self.initial = False
                             self.playing = True
@@ -144,6 +147,7 @@ class Game:
                             self.playing = True
                     elif event.type == pygame.QUIT:
                         self.running = False
+                        self.playing = False
 
         pygame.quit()
         sys.exit()
