@@ -7,7 +7,7 @@ This is a simple version of the Chrome T.rex game. (Yap, that game when you lose
 <br>
 <br>
 
-## v0.9.0
+## v0.9
 To run this game, make sure you have Pygame installed.
 
 Clone this repository, and run `main.py` to play.
